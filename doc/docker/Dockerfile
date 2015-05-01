@@ -10,12 +10,13 @@ CMD ["/sbin/my_init"]
 RUN apt update
 RUN apt-get -y install imagemagick gsfonts
 
-ADD peatio /home/app/peatio
-RUN chown -R app:app /home/app/peatio
-
 USER app
 ENV HOME /home/app
 
+RUN git clone git@github.com:peatio/peatio.git /home/app/peatio
+
+# ADD peatio /home/app/peatio
+RUN chown -R app:app /home/app/peatio
 WORKDIR /home/app/peatio
 RUN bundle install --without development test --path vendor/bundle
 
